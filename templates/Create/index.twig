@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for messages in app.flashes %}
+        {% for message in messages  %}
+            {{ message }}
+        {% endfor %}
+    {% endfor %}
+{% endblock body %}

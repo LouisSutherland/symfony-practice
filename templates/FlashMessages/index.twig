@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <style>
+        .success{
+            color: green;
+        }
+        .warning{
+            color: red;
+        }
+    </style>
+
+    {% for label, messages in app.flashes(['success', 'warning']) %}
+        {% for message in messages %}
+            <h1 class="{{ label }}">{{ message }}</h1>
+        {% endfor %}
+    {% endfor %}
+{% endblock body %}
