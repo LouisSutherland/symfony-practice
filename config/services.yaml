@@ -23,3 +23,13 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Services\MyService:
+        arguments:
+            $param: 'Some parameter'
+
+    App\Services\DateService:
+        arguments:
+            $date: '2026-09-21'
+
+

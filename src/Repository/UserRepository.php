@@ -6,6 +6,7 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -33,6 +34,34 @@ class UserRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+
+    /**
+     * @return int|mixed|string
+     */
+    public function getAllSorted()
+    {
+        $qb = $this->createQueryBuilder('user');
+        $qb->select('user.name');
+        $qb->orderBy('user.name');
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findWithVideos($id): mixed
+    {
+        return $this->createQueryBuilder('u')
+                    ->innerJoin('u.videos', 'v')
+                    ->addSelect('v')
+                    ->andWhere('u.id = :id')
+                    ->setParameter('id', $id)
+                    ->getQuery()
+                    ->getOneOrNullResult();
     }
 
     /**
